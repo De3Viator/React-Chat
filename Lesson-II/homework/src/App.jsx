@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import Button from './components/classes/Button';
-import Input from './components/classes/Input';
+import Button from './components/function/Button';
+import Input from './components/function/Input';
 
 function App() {
   const [messageList, setMessageList] = useState([]);
