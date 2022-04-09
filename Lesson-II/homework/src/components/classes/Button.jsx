@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class Button extends Component {
-    render() {
-        return <button onClick={this.props.addMessage}> click </button>
-    }
+  render() {
+    return <button onClick={this.props.addMessage}> click </button>;
+  }
 }
