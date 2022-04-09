@@ -1,5 +1,4 @@
-import { useRef } from "react"
-
+import React, { useRef } from "react"
 export default function Input(props) {
     const message = useRef(null);
     function setValue() {

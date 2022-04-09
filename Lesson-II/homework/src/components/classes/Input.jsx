@@ -1,4 +1,4 @@
-import { Component, createRef } from "react";
+import React, { Component, createRef } from "react";
 
 class Input extends Component {
     constructor(props) {
