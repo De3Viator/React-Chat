@@ -12,6 +12,14 @@ class Input extends Component {
     this.props.changeValue(this.message.current.value, this.props.element);
   }
 
+  componentDidMount() {
+    console.log('Загрузка начата');
+  }
+
+  componentWillUnmount() {
+    console.log('Было выполнено удаление');
+  }
+
   render() {
     return (
       <input
