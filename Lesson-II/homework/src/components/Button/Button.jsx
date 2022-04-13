@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 // eslint-disable-next-line no-unused-vars
-export function Button({ props, handleClick }) {
-  return <button onClick={handleClick}>click</button>;
-}
+export const Button = memo(function Button(props, { handleClick }) {
+  return <button onClick={props.addMessage}>click</button>;
+});

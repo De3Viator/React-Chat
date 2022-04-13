@@ -1,16 +1,18 @@
-import React, { useRef } from 'react';
-export function Input({ props, handleChange }) {
+import React, { useRef, memo } from 'react';
+// eslint-disable-next-line no-unused-vars
+export const Input = memo(function Input(props, { handleChange }) {
   const message = useRef(null);
-  // eslint-disable-next-line no-unused-vars
   function setValue() {
     props.changeValue(message.current.value, props.element);
   }
   return (
-    <input
-      data-testid="inputName"
-      ref={message}
-      type="text"
-      onChange={handleChange}
-    />
+    <label>
+      <input
+        data-testid="inputName"
+        ref={message}
+        type="text"
+        onChange={setValue}
+      />
+    </label>
   );
-}
+});

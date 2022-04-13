@@ -49,8 +49,8 @@ function App() {
         <Button addMessage={addMessage} />
         Name:
         <Input changeValue={changeValue} element={'message'} />
-        Message
-        <Input message={message} changeValue={changeValue} element={'name'} />
+        Message:
+        <Input changeValue={changeValue} element={'name'} />
       </form>
       <MessageList messageList={messageList} />
     </>
