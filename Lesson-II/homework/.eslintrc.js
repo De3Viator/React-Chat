@@ -33,6 +33,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['warn', 'single'],
     semi: ['warn', 'always'],
+    'linebreak-style': 0,
   },
   overrides: [
     {
