@@ -1,5 +1,5 @@
 import React from 'react';
 
-export function Button(props) {
-  return <button onClick={props.addMessage}> click </button>;
+export function Button({ props, handleClick }) {
+  return <button onClick={handleClick}>click</button>;
 }
