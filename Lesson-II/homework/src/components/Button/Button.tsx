@@ -7,7 +7,7 @@ type Props = {
 
 export const Button = memo(function Button(props: Props) {
   return (
-    <ButtonUI onClick={props.addMessage} variant="contained">
+    <ButtonUI variant="contained" onClick={props.addMessage}>
       click
     </ButtonUI>
   );

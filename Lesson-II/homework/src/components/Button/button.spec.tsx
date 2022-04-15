@@ -3,14 +3,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
 
 describe('test button component', () => {
+  const addMessage = jest.fn();
   it('render button', () => {
-    render(<Button />);
+    render(<Button addMessage={addMessage} />);
   });
 
   it('calls when clicked', () => {
-    const handleClick = jest.fn();
-    render(<Button handleClick={handleClick}></Button>);
+    const addMessage = jest.fn();
+    render(<Button addMessage={addMessage}></Button>);
     fireEvent.click(screen.getByText(/click/));
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(addMessage).toHaveBeenCalledTimes(1);
   });
 });
