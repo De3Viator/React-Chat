@@ -13,6 +13,8 @@ module.exports = {
     'prettier',
     'plugin:react-hooks/recommended',
     'plugin:storybook/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -27,10 +29,10 @@ module.exports = {
       'error',
       {
         singleQuote: true,
+        endOfLine: 'auto',
       },
     ],
     'react/prop-types': 0,
-    'linebreak-style': ['error', 'unix'],
     quotes: ['warn', 'single'],
     semi: ['warn', 'always'],
     'linebreak-style': 0,
