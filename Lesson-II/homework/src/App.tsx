@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { Message } from './components/shared/message';
 import { User } from './components/shared/user';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: 'dark',
   },
