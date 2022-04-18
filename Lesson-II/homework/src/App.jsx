@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import Button from './components/function/Button';
-import Input from './components/function/Input';
+import { Button } from './components/Button/Button';
+import { Input } from './components/Input/Input';
+import { MessageList } from './components/MessageList/MessageList';
 
 function App() {
   const [messageList, setMessageList] = useState([]);
@@ -48,16 +49,10 @@ function App() {
         <Button addMessage={addMessage} />
         Name:
         <Input changeValue={changeValue} element={'message'} />
-        Message
-        <Input message={message} changeValue={changeValue} element={'name'} />
+        Message:
+        <Input changeValue={changeValue} element={'name'} />
       </form>
-      <ul>
-        {messageList.map((message) => (
-          <li key={message.message}>
-            {message.name}:{message.message}
-          </li>
-        ))}
-      </ul>
+      <MessageList messageList={messageList} />
     </>
   );
 }
