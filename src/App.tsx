@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { Message } from './components/shared/message';
 import { User } from './components/shared/user';
-
+//для добавления в pr
 export const theme = createTheme({
   palette: {
     mode: 'dark',

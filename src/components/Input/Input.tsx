@@ -5,7 +5,6 @@ type Props = {
   changeValue: (message: string, element: string) => void;
   element: string;
 };
-//for test - { handleChange }
 export const Input = memo(function Input(props: Props) {
   const message = useRef(null);
   function setValue() {

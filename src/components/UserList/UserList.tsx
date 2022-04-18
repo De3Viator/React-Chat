@@ -2,7 +2,7 @@ import React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { User } from '../shared/user';
-//for test = { handleMessages }
+//для добавления в pr
 type Props = {
   userList: User[];
 };

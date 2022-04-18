@@ -2,7 +2,6 @@ import React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { Message } from '../shared/message';
-// for test = { handleMessages }
 type Props = {
   messageList: Message[];
 };
