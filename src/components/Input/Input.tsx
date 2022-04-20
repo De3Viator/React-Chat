@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import TextField from '@mui/material/TextField';
+import './Input.scss';
 
 type Props = {
   setMessage?: (message: string) => void;
@@ -15,6 +16,7 @@ export const Input = memo(function Input(props: Props) {
       type="text"
       label="Message"
       variant="outlined"
+      className="input"
     />
   );
 });

@@ -1,11 +1,11 @@
+import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { nanoid } from 'nanoid';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageList } from '../MessageList/MessageList';
 import { Message } from '../shared/message';
 import { User } from '../shared/user';
 import { UserList } from '../UserList/UserList';
-import React from 'react';
 import createTheme from '@material-ui/core/styles/createTheme';
 import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
@@ -24,7 +24,6 @@ export function Chat() {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>('');
   const { id } = useParams<string>();
-  const formAction = useRef<HTMLFormElement>(null);
   const [send, setSend] = useState<boolean>(false);
   const [userFinded, setUserFinded] = useState<User>();
   const [userList, setUserList] = useState<User[]>([
@@ -60,7 +59,6 @@ export function Chat() {
         id: nanoid(),
       };
       setTimeout(() => {
-        setMessageList((prevValue: Message[]) => [...prevValue, botAnswer]);
         updateUser(botAnswer);
       }, 1500);
     }
@@ -78,40 +76,40 @@ export function Chat() {
   function addMessage(): void {
     setSend(true);
     const newMessage: Message = { name: 'user', message, id: nanoid() };
-    setMessageList((prevValue) => [...prevValue, newMessage]);
     updateUser(newMessage);
     setTimeout(() => {
       setSend(false);
     }, 2000);
   }
 
-  function updateUser(message) {
+  function updateUser(message: Message): void {
+    setMessageList((prevValue: Message[]) => [...prevValue, message]);
     userList[userList.indexOf(userFinded)].messages.push(message);
     setUserList([...userList]);
+  }
+
+  function deleteUser(user: User) {
+    userList.splice(userList.indexOf(user), 1);
+    setUserList([...userList]);
+    setMessageList([]);
   }
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <form
-          className={send ? 'sended' : 'notSended'}
-          ref={formAction}
-          action="#"
-        >
-          <label>
-            <Input setMessage={setMessage} element="message" />
-          </label>
-          <div>
-            <Button addMessage={addMessage} />
-          </div>
-        </form>
         <div className="board">
-          <div className="board__item">
-            <UserList userList={userList} />
+          <div className="board__item-chats">
+            <UserList deleteUser={deleteUser} userList={userList} />
           </div>
-          <div className="board__item">
+          <div className="board__item-messages">
             <MessageList messageList={messageList} />
+            <label>
+              <form action="#">
+                <Input setMessage={setMessage} element="message" />
+                <Button addMessage={addMessage} />
+              </form>
+            </label>
           </div>
         </div>
       </ThemeProvider>
