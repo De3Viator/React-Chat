@@ -19,7 +19,10 @@ export function UserList(props: Props) {
           <Link className="user-link" key={user.id} to={`/chats/${user.id}`}>
             <ListItem disablePadding data-testid="message">
               <ListItemButton>
-                <ListItemIcon onClick={() => props.deleteUser(user)}>
+                <ListItemIcon
+                  data-testid="deleteUser"
+                  onClick={() => props.deleteUser(user)}
+                >
                   <DeleteIcon />
                 </ListItemIcon>
                 <ListItemText>{user.name}</ListItemText>

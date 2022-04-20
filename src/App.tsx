@@ -3,8 +3,6 @@ import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Chat } from './components/Chat/Chat';
 import { Layout } from './components/Layout/Layout';
-import { Input } from './components/Input/Input';
-import { MessageList } from './components/MessageList/MessageList';
 
 function App() {
   return (
