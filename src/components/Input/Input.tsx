@@ -3,14 +3,13 @@ import TextField from '@mui/material/TextField';
 import './Input.scss';
 
 type Props = {
-  setMessage?: (message: string) => void;
-  element?: string;
+  setField?: (field: string) => void;
 };
 export const Input = memo(function Input(props: Props) {
   return (
     <TextField
       autoFocus
-      onChange={(e) => props.setMessage(e.target.value)}
+      onChange={(e) => props.setField(e.target.value)}
       data-testid="inputName"
       id="outlined-basic"
       type="text"

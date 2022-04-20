@@ -26,6 +26,7 @@ export function Chat() {
   const { id } = useParams<string>();
   const [send, setSend] = useState<boolean>(false);
   const [userFinded, setUserFinded] = useState<User>();
+  const [userAdded, setUserAdded] = useState<string>();
   const [userList, setUserList] = useState<User[]>([
     {
       name: 'Charlie',
@@ -82,6 +83,11 @@ export function Chat() {
     }, 2000);
   }
 
+  function addUser(): void {
+    const newUser: User = { name: userAdded, messages: [], id: nanoid() };
+    setUserList((previewValue) => [...previewValue, newUser]);
+  }
+
   function updateUser(message: Message): void {
     setMessageList((prevValue: Message[]) => [...prevValue, message]);
     userList[userList.indexOf(userFinded)].messages.push(message);
@@ -101,13 +107,15 @@ export function Chat() {
         <div className="board">
           <div className="board__item-chats">
             <UserList deleteUser={deleteUser} userList={userList} />
+            <Input setField={setUserAdded} />
+            <Button addField={addUser} />
           </div>
           <div className="board__item-messages">
             <MessageList messageList={messageList} />
             <label>
               <form action="#">
-                <Input setMessage={setMessage} element="message" />
-                <Button addMessage={addMessage} />
+                <Input setField={setMessage} />
+                <Button addField={addMessage} />
               </form>
             </label>
           </div>
