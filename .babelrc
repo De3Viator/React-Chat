@@ -1,7 +1,11 @@
 {
     "presets": [
         "@babel/preset-env",
+<<<<<<< HEAD
         "@babel/preset-react",
         "@babel/preset-typescript"
+=======
+        "@babel/preset-react"
+>>>>>>> master
     ]
 }
