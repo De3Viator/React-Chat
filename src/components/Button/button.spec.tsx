@@ -5,13 +5,13 @@ import { Button } from './Button';
 describe('test button component', () => {
   const addMessage = jest.fn();
   it('render button', () => {
-    render(<Button addMessage={addMessage} />);
+    render(<Button addField={addMessage} />);
   });
 
   it('calls when clicked', () => {
     const addMessage = jest.fn();
-    render(<Button addMessage={addMessage}></Button>);
-    fireEvent.click(screen.getByText(/click/));
+    render(<Button addField={addMessage}></Button>);
+    fireEvent.click(screen.getByText(/enter/i));
     expect(addMessage).toHaveBeenCalledTimes(1);
   });
 });
