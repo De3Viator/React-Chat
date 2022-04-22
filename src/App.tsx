@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Chat } from './components/Chat/Chat';
@@ -7,10 +7,19 @@ import { Profile } from './components/Profile/Profile';
 import { Home } from './components/Home/Home';
 import { Provider } from 'react-redux';
 import { store } from './components/store/store';
+import { checkReducer } from './components/context/checkReduser';
+import { CheckContext, initialState } from './components/context/checkContext';
 
 function App() {
+  const [visibility, dispatch] = useReducer(checkReducer, initialState);
   return (
-    <Provider store={store}>
+    //<Provider store={store}>
+    <CheckContext.Provider
+      value={{
+        visibility,
+        dispatch,
+      }}
+    >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -22,7 +31,8 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </CheckContext.Provider>
+    //</Provider>
   );
 }
 
