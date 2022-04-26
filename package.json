@@ -82,41 +82,5 @@
     "loki:update": "npm run build-storybook && loki update --requireReference --reactUri file:./storybook-static",
     "loki:test": "npm run build-storybook && loki test --requireReference --reactUri file:./storybook-static",
     "loki:approve": "loki approve"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
-  },
-  "eslintConfig": {
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "jest": {
-    "testEnvironment": "jsdom"
-  },
-  "loki": {
-    "configurations": {
-      "chrome.laptop": {
-        "target": "chrome.app",
-        "width": 1366,
-        "height": 768,
-        "deviceScaleFactor": 1,
-        "mobile": false
-      },
-      "chrome.iphone7": {
-        "target": "chrome.app",
-        "preset": "iPhone 7"
-      }
-    }
   }
 }
