@@ -1,28 +1,21 @@
-import React, { useRef, memo } from 'react';
+import React, { memo } from 'react';
 import TextField from '@mui/material/TextField';
+import './Input.scss';
 
 type Props = {
-  changeValue: (message: string, element: string) => void;
-  element: string;
+  setField?: (field: string) => void;
 };
 export const Input = memo(function Input(props: Props) {
-  const message = useRef(null);
-  function setValue() {
-    props.changeValue(
-      message.current.children[1].children[0].value,
-      props.element
-    );
-  }
   return (
     <TextField
       autoFocus
-      onChange={setValue}
+      onChange={(e) => props.setField(e.target.value)}
       data-testid="inputName"
       id="outlined-basic"
-      ref={message}
       type="text"
-      label="Outlined"
+      label="Message"
       variant="outlined"
+      className="input"
     />
   );
 });
