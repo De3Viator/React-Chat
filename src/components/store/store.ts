@@ -1,17 +1,23 @@
-import { compose, createStore, combineReducers } from 'redux';
-import { chatReducer, ChatState } from './chats/chatReducer';
-import { CheckState, profileReducer } from './profile/profileReducer';
-const composeEnhancers =
-  (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose) || compose;
-
+import { configureStore } from '@reduxjs/toolkit';
+import chatSlice, { ChatState } from './chats/chatSlice';
+import { ChatActions } from './chats/types';
+import profileSlice, {
+  CheckState,
+  ProfileAction,
+} from './profile/profileSlice';
 export interface StoreState {
   profile: CheckState;
   chat: ChatState;
 }
-export const store = createStore(
-  combineReducers({
-    profile: profileReducer,
-    chat: chatReducer,
-  }),
-  composeEnhancers()
-);
+
+export interface StoreAction {
+  profile: ProfileAction;
+  chat: ChatActions;
+  type: string;
+}
+
+export const store = configureStore<StoreState, StoreAction>({
+  reducer: { profile: profileSlice, chat: chatSlice },
+});
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCheck } from '../store/profile/action';
-import { CheckState } from '../store/profile/profileReducer';
+import { changeCheck } from '../store/profile/profileSlice';
+import { StoreState } from '../store/store';
 
 export function Profile() {
-  const visible = useSelector((state: CheckState) => state.check);
+  const visible = useSelector((state: StoreState) => state.profile.check);
   const dispatch = useDispatch();
   return (
     <>
@@ -12,7 +12,7 @@ export function Profile() {
       <input
         type="checkbox"
         checked={visible}
-        onClick={() => dispatch(toggleCheck())}
+        onClick={() => dispatch(changeCheck(0))}
       />
     </>
   );

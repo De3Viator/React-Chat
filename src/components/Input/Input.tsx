@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import React, { FC, memo } from 'react';
 import TextField from '@mui/material/TextField';
 import './Input.scss';
 
 type Props = {
-  setField?: (field: string) => void;
+  setField: (field: string) => void;
 };
-export const Input = memo(function Input(props: Props) {
+export const Input: FC<Props> = memo(function Input(props: Props) {
   return (
     <TextField
       autoFocus
@@ -13,7 +13,6 @@ export const Input = memo(function Input(props: Props) {
       data-testid="inputName"
       id="outlined-basic"
       type="text"
-      label="Message"
       variant="outlined"
       className="input"
     />

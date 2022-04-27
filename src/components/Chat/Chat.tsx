@@ -11,13 +11,14 @@ import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../store/store';
 import {
-  addMessageStore,
-  addUserStore,
-  deleteUserStore,
-} from '../store/chats/actions';
+  addMessageSlice,
+  addUserSlice,
+  ChatState,
+  deleteUserSlice,
+} from '../store/chats/chatSlice';
 
 const theme = createTheme({
   palette: {
@@ -28,7 +29,6 @@ const theme = createTheme({
 });
 
 export function Chat() {
-  const [messageList, setMessageList] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>('');
   const { id } = useParams<string>();
   const [send, setSend] = useState<boolean>(false);
@@ -37,11 +37,11 @@ export function Chat() {
     messages: [],
     id: nanoid(),
   });
-  const [userAdded, setUserAdded] = useState<string>();
+  const [userAdded, setUserAdded] = useState<string>('');
   const dispatch = useDispatch();
   const chat = useSelector((state: StoreState) => state.chat.users);
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (send) {
       const botAnswer: Message = {
         name: 'bot',
@@ -52,7 +52,7 @@ export function Chat() {
         updateUser(botAnswer);
       }, 1500);
     }
-  }, [send]);*/
+  }, [send]);
 
   useEffect(() => {
     chat.find((user) => {
@@ -69,19 +69,33 @@ export function Chat() {
     setTimeout(() => {
       setSend(false);
     }, 2000);
-    console.log(chat);
   }
 
   function addUser(): void {
-    dispatch(addUserStore(userAdded));
+    const payload = {
+      userName: userAdded,
+    };
+    dispatch(addUserSlice(payload));
   }
 
   function updateUser(message: Message): void {
-    dispatch(addMessageStore(message, userFinded));
+    const payload = {
+      user: userFinded,
+      message,
+    };
+    dispatch(addMessageSlice(payload));
+    setUserFinded({
+      name: userFinded.name,
+      id: userFinded.id,
+      messages: [...userFinded.messages, message],
+    });
   }
 
   function deleteUser(user: User) {
-    dispatch(deleteUserStore(user));
+    const payload = {
+      user,
+    };
+    dispatch(deleteUserSlice(payload));
     setUserFinded({ name: '', messages: [], id: nanoid() });
   }
 
@@ -93,14 +107,14 @@ export function Chat() {
           <div className="board__item-chats">
             <UserList deleteUser={deleteUser} userList={chat} />
             <Input setField={setUserAdded} />)
-            <Button addField={addUser} />
+            <Button disabled={userAdded.length === 0} addField={addUser} />
           </div>
           <div className="board__item-messages">
             <MessageList messageList={userFinded.messages} />
             <label>
               <form action="#">
                 <Input setField={setMessage} />
-                <Button addField={addMessage} />
+                <Button disabled={message.length === 0} addField={addMessage} />
               </form>
             </label>
           </div>
