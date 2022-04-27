@@ -1,25 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckContext } from '../context/checkContext';
-import { toggleCheck } from '../store/action';
-import { CheckState } from '../store/profileReducer';
+import { toggleCheck } from '../store/profile/action';
+import { CheckState } from '../store/profile/profileReducer';
 
 export function Profile() {
-  // const visible = useSelector((state: CheckState) => state.check);
-  //const dispatch = useDispatch();
-  const { visibility, dispatch } = useContext(CheckContext);
+  const visible = useSelector((state: CheckState) => state.check);
+  const dispatch = useDispatch();
   return (
     <>
       <h2>Profile</h2>
       <input
         type="checkbox"
-        checked={visibility.check}
-        //onClick={() => dispatch(toggleCheck())}
-        onClick={() =>
-          dispatch({
-            type: 'CHANGE_CHECK',
-          })
-        }
+        checked={visible}
+        onClick={() => dispatch(toggleCheck())}
       />
     </>
   );

@@ -1,6 +1,6 @@
 import { profileReducer } from '../store/profileReducer';
 
-test('reducers', () => {
+test('profile reducer', () => {
   const state = profileReducer(
     { check: false },
     { type: 'PRFOILE::CHANGE_CHECK' }

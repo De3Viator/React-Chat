@@ -11,6 +11,13 @@ import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreState } from '../store/store';
+import {
+  addMessageStore,
+  addUserStore,
+  deleteUserStore,
+} from '../store/chats/actions';
 
 const theme = createTheme({
   palette: {
@@ -25,35 +32,17 @@ export function Chat() {
   const [message, setMessage] = useState<string>('');
   const { id } = useParams<string>();
   const [send, setSend] = useState<boolean>(false);
-  const [userFinded, setUserFinded] = useState<User>();
+  const [userFinded, setUserFinded] = useState<User>({
+    name: '',
+    messages: [],
+    id: nanoid(),
+  });
   const [userAdded, setUserAdded] = useState<string>();
-  const [userList, setUserList] = useState<User[]>([
-    {
-      name: 'Charlie',
-      id: nanoid(),
-      messages: [
-        {
-          name: 'Charlie',
-          message: 'Hello, user!',
-          id: nanoid(),
-        },
-      ],
-    },
-    {
-      name: 'Chloe',
-      id: nanoid(),
-      messages: [
-        {
-          name: 'Chloe',
-          message: 'Hello, user!',
-          id: nanoid(),
-        },
-      ],
-    },
-  ]);
+  const dispatch = useDispatch();
+  const chat = useSelector((state: StoreState) => state.chat.users);
 
-  useEffect(() => {
-    if (send === true) {
+  /*useEffect(() => {
+    if (send) {
       const botAnswer: Message = {
         name: 'bot',
         message: 'Ваше сообщение было отправлено!',
@@ -63,13 +52,12 @@ export function Chat() {
         updateUser(botAnswer);
       }, 1500);
     }
-  }, [send]);
+  }, [send]);*/
 
   useEffect(() => {
-    userList.find((user) => {
+    chat.find((user) => {
       if (user.id === id) {
         setUserFinded(user);
-        setMessageList([...user.messages]);
       }
     });
   }, [id]);
@@ -81,23 +69,20 @@ export function Chat() {
     setTimeout(() => {
       setSend(false);
     }, 2000);
+    console.log(chat);
   }
 
   function addUser(): void {
-    const newUser: User = { name: userAdded, messages: [], id: nanoid() };
-    setUserList((previewValue) => [...previewValue, newUser]);
+    dispatch(addUserStore(userAdded));
   }
 
   function updateUser(message: Message): void {
-    setMessageList((prevValue: Message[]) => [...prevValue, message]);
-    userList[userList.indexOf(userFinded)].messages.push(message);
-    setUserList([...userList]);
+    dispatch(addMessageStore(message, userFinded));
   }
 
   function deleteUser(user: User) {
-    userList.splice(userList.indexOf(user), 1);
-    setUserList([...userList]);
-    setMessageList([]);
+    dispatch(deleteUserStore(user));
+    setUserFinded({ name: '', messages: [], id: nanoid() });
   }
 
   return (
@@ -106,12 +91,12 @@ export function Chat() {
         <CssBaseline />
         <div className="board">
           <div className="board__item-chats">
-            <UserList deleteUser={deleteUser} userList={userList} />
-            <Input setField={setUserAdded} />
+            <UserList deleteUser={deleteUser} userList={chat} />
+            <Input setField={setUserAdded} />)
             <Button addField={addUser} />
           </div>
           <div className="board__item-messages">
-            <MessageList messageList={messageList} />
+            <MessageList messageList={userFinded.messages} />
             <label>
               <form action="#">
                 <Input setField={setMessage} />
