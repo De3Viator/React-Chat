@@ -6,6 +6,8 @@ export const Layout: FC = () => {
     <>
       <header>
         <Link to="/chats">Chats</Link>
+        <Link to="/home">Home</Link>
+        <Link to="/profile">Profile</Link>
       </header>
       <main>
         <Outlet />
