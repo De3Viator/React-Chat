@@ -109,15 +109,20 @@ export function Chat() {
             <Input setField={setUserAdded} />)
             <Button disabled={userAdded.length === 0} addField={addUser} />
           </div>
-          <div className="board__item-messages">
-            <MessageList messageList={userFinded.messages} />
-            <label>
-              <form action="#">
-                <Input setField={setMessage} />
-                <Button disabled={message.length === 0} addField={addMessage} />
-              </form>
-            </label>
-          </div>
+          {userFinded.name && (
+            <div className="board__item-messages">
+              <MessageList messageList={userFinded.messages} />
+              <label>
+                <form action="#">
+                  <Input setField={setMessage} />
+                  <Button
+                    disabled={message.length === 0}
+                    addField={addMessage}
+                  />
+                </form>
+              </label>
+            </div>
+          )}
         </div>
       </ThemeProvider>
     </>

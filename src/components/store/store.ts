@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import chatSlice, { ChatState } from './chats/chatSlice';
-import { ChatActions } from './chats/types';
+import { ChatActions } from './chats/chatSlice';
 import profileSlice, {
   CheckState,
   ProfileAction,
