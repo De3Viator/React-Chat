@@ -1,38 +1,45 @@
-import React, { useReducer } from 'react';
+import React, { lazy, Suspense } from 'react';
 import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Chat } from './components/Chat/Chat';
 import { Layout } from './components/Layout/Layout';
-import { Profile } from './components/Profile/Profile';
-import { Home } from './components/Home/Home';
 import { Provider } from 'react-redux';
 import { store } from './components/store/store';
-import { checkReducer } from './components/context/checkReduser';
-import { CheckContext, initialState } from './components/context/checkContext';
+
+const Chat = lazy(() =>
+  import('./components/Chat/Chat').then((module) => ({
+    default: module.Chat,
+  }))
+);
+
+const Profile = lazy(() =>
+  import('./components/Profile/Profile').then((module) => ({
+    default: module.Profile,
+  }))
+);
+
+const Home = lazy(() =>
+  import('./components/Home/Home').then((module) => ({
+    default: module.Home,
+  }))
+);
 
 function App() {
-  const [visibility, dispatch] = useReducer(checkReducer, initialState);
   return (
-    //<Provider store={store}>
-    <CheckContext.Provider
-      value={{
-        visibility,
-        dispatch,
-      }}
-    >
+    <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="home" element={<Home />} />
-            <Route path="chats" element={<Chat />}>
-              <Route path=":id" />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="home" element={<Home />} />
+              <Route path="chats" element={<Chat />}>
+                <Route path=":id" />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
-    </CheckContext.Provider>
-    //</Provider>
+    </Provider>
   );
 }
 
