@@ -11,12 +11,12 @@ import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../store/store';
 import {
   addMessageSlice,
   addUserSlice,
-  ChatState,
+  botAnswer,
   deleteUserSlice,
 } from '../store/chats/chatSlice';
 
@@ -31,28 +31,15 @@ const theme = createTheme({
 export function Chat() {
   const [message, setMessage] = useState<string>('');
   const { id } = useParams<string>();
-  const [send, setSend] = useState<boolean>(false);
   const [userFinded, setUserFinded] = useState<User>({
     name: '',
     messages: [],
     id: nanoid(),
   });
   const [userAdded, setUserAdded] = useState<string>('');
+
   const dispatch = useDispatch();
   const chat = useSelector((state: StoreState) => state.chat.users);
-
-  useEffect(() => {
-    if (send) {
-      const botAnswer: Message = {
-        name: 'bot',
-        message: 'Ваше сообщение было отправлено!',
-        id: nanoid(),
-      };
-      setTimeout(() => {
-        updateUser(botAnswer);
-      }, 1500);
-    }
-  }, [send]);
 
   useEffect(() => {
     chat.find((user) => {
@@ -63,12 +50,9 @@ export function Chat() {
   }, [id]);
 
   function addMessage(): void {
-    setSend(true);
     const newMessage: Message = { name: 'user', message, id: nanoid() };
     updateUser(newMessage);
-    setTimeout(() => {
-      setSend(false);
-    }, 2000);
+    dispatch<any>(botAnswer(userFinded));
   }
 
   function addUser(): void {

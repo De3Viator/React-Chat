@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import chatSlice, { ChatState } from './chats/chatSlice';
+import chatSlice, { botAnswer, ChatState } from './chats/chatSlice';
 import { ChatActions } from './chats/chatSlice';
 import profileSlice, {
   CheckState,
