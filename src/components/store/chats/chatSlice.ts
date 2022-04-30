@@ -21,6 +21,13 @@ export interface ChatPayload {
   };
 }
 
+export interface BotPayload {
+  payload: {
+    user: User;
+    bot: Message;
+  };
+}
+
 export const botAnswer = createAsyncThunk('BOT_ANSWER', async (user: User) => {
   const bot: Message = await new Promise((resolve) =>
     setTimeout(() => {
@@ -84,9 +91,18 @@ export const chatSlice: Slice<ChatState> = createSlice({
         messages: [],
       });
     },
+    addBotMessage(state, action: BotPayload) {
+      if (!action.payload.bot || !action.payload.user.messages) {
+        return;
+      } else {
+        const us = state.users.find((el) => el.id === action.payload.user.id);
+        state.users[state.users.indexOf(us)].messages.push(action.payload.bot);
+        return;
+      }
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(botAnswer.fulfilled, (state, action) => {
+    builder.addCase(botAnswer.fulfilled, (state, action: BotPayload) => {
       const us = state.users.find((el) => el.id === action.payload.user.id);
       state.users[state.users.indexOf(us)].messages.push(action.payload.bot);
       return state;
@@ -94,6 +110,6 @@ export const chatSlice: Slice<ChatState> = createSlice({
   },
 });
 
-export const { addMessageSlice, deleteUserSlice, addUserSlice } =
+export const { addMessageSlice, deleteUserSlice, addUserSlice, addBotMessage } =
   chatSlice.actions;
 export default chatSlice.reducer;

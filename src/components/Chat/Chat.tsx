@@ -14,6 +14,7 @@ import { CssBaseline } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../store/store';
 import {
+  addBotMessage,
   addMessageSlice,
   addUserSlice,
   botAnswer,
@@ -47,12 +48,13 @@ export function Chat() {
         setUserFinded(user);
       }
     });
-  }, [id]);
+  }, [id, chat]);
 
   function addMessage(): void {
     const newMessage: Message = { name: 'user', message, id: nanoid() };
     updateUser(newMessage);
-    dispatch<any>(botAnswer(userFinded));
+    //dispatch<any>(botAnswer(userFinded));
+    dispatch(addBotMessage(userFinded));
   }
 
   function addUser(): void {
@@ -68,11 +70,6 @@ export function Chat() {
       message,
     };
     dispatch(addMessageSlice(payload));
-    setUserFinded({
-      name: userFinded.name,
-      id: userFinded.id,
-      messages: [...userFinded.messages, message],
-    });
   }
 
   function deleteUser(user: User) {
