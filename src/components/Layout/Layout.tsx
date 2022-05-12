@@ -111,6 +111,14 @@ export const Layout: FC = () => {
                     Home
                   </Link>
                 </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  <Link to="/profile" className="link">
+                    Profile
+                  </Link>
+                </Button>
               </Box>
 
               <Box sx={{ flexGrow: 0 }}>
