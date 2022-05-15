@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRedditSlice, RedditUser } from '../../store/home/home.slice';
 import { StoreState } from '../../store/store';
-import { RedditList } from '../redditList/RedditList';
+import { RedditList } from '../RedditList/RedditList';
 export function Home() {
   const reddit: RedditUser[] = useSelector(
     (state: StoreState) => state.home.reddit
