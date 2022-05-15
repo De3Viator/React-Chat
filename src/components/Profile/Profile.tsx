@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCheck } from '../store/profile/profileSlice';
 import { StoreState } from '../store/store';
+import storage from 'redux-persist/es/storage';
 
 export function Profile() {
   const visible = useSelector((state: StoreState) => state.profile.check);
