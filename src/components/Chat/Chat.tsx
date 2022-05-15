@@ -12,14 +12,13 @@ import { Button } from '../Button/Button';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { StoreState } from '../store/store';
+import { StoreState } from '../../store/store';
 import {
-  addBotMessage,
   addMessageSlice,
   addUserSlice,
   botAnswer,
   deleteUserSlice,
-} from '../store/chats/chatSlice';
+} from '../../store/chats/chatSlice';
 
 const theme = createTheme({
   palette: {
@@ -41,7 +40,6 @@ export function Chat() {
 
   const dispatch = useDispatch();
   const chat = useSelector((state: StoreState) => state.chat.users);
-
   useEffect(() => {
     chat.find((user) => {
       if (user.id === id) {
@@ -53,8 +51,7 @@ export function Chat() {
   function addMessage(): void {
     const newMessage: Message = { name: 'user', message, id: nanoid() };
     updateUser(newMessage);
-    //dispatch<any>(botAnswer(userFinded));
-    dispatch(addBotMessage(userFinded));
+    dispatch<any>(botAnswer(userFinded));
   }
 
   function addUser(): void {
@@ -88,7 +85,9 @@ export function Chat() {
           <div className="board__item-chats">
             <UserList deleteUser={deleteUser} userList={chat} />
             <Input setField={setUserAdded} />)
-            <Button disabled={userAdded.length === 0} addField={addUser} />
+            <Button disabled={userAdded.length === 0} addField={addUser}>
+              Add User
+            </Button>
           </div>
           {userFinded.name && (
             <div className="board__item-messages">
@@ -96,10 +95,9 @@ export function Chat() {
               <label>
                 <form action="#">
                   <Input setField={setMessage} />
-                  <Button
-                    disabled={message.length === 0}
-                    addField={addMessage}
-                  />
+                  <Button disabled={message.length === 0} addField={addMessage}>
+                    Add Message
+                  </Button>
                 </form>
               </label>
             </div>

@@ -1,20 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCheck } from '../store/profile/profileSlice';
-import { StoreState } from '../store/store';
-import storage from 'redux-persist/es/storage';
+import { StoreState } from '../../store/store';
+export { Button } from '../Button/Button';
+import { Input } from '../Input/Input';
+import { Button } from '../Button/Button';
+import { authUser } from '../../store/profile/profileSlice';
+import { Checkbox } from '@mui/material';
 
 export function Profile() {
-  const visible = useSelector((state: StoreState) => state.profile.check);
+  const isAuth = useSelector((state: StoreState) => state.profile.auth.isAuth);
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch();
+  const sendAuth = () => {
+    const payload = {
+      login,
+      password,
+    };
+    dispatch(authUser(payload));
+  };
   return (
     <>
       <h2>Profile</h2>
-      <input
-        type="checkbox"
-        checked={visible}
-        onClick={() => dispatch(changeCheck(0))}
-      />
+      Loginned:
+      <Checkbox checked={isAuth} defaultChecked />
+      <form style={{ width: '400px' }}>
+        <Input setField={setLogin}></Input>
+        <Input setField={setPassword}></Input>
+        <Button
+          addField={sendAuth}
+          disabled={!((login !== '' && password !== '') || isAuth === true)}
+        >
+          {isAuth ? 'Log out' : 'Log in'}
+        </Button>
+      </form>
     </>
   );
 }

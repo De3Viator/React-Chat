@@ -3,7 +3,8 @@ import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout/Layout';
 import { Provider } from 'react-redux';
-import { store } from './components/store/store';
+import { store } from './store/store';
+import { ProtectedRoute } from './routes/protectedRoutes';
 
 const Chat = lazy(() =>
   import('./components/Chat/Chat').then((module) => ({
@@ -31,9 +32,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="profile" element={<Profile />} />
-              <Route path="home" element={<Home />} />
-              <Route path="chats" element={<Chat />}>
-                <Route path=":id" />
+              <Route element={<ProtectedRoute />}>
+                <Route path="home" element={<Home />} />
+                <Route path="chats" element={<Chat />}>
+                  <Route path=":id" />
+                </Route>
               </Route>
             </Route>
           </Routes>

@@ -4,17 +4,16 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import chatSlice, { ChatState } from './chats/chatSlice';
 import { ChatActions } from './chats/chatSlice';
-import logger from 'redux-logger';
 import profileSlice, {
-  CheckState,
+  ProfileState,
   ProfileAction,
 } from './profile/profileSlice';
-import createSagaMiddleware from 'redux-saga';
-import chatSaga from './reduxSaga';
+import homeSlice, { HomeState } from './home/home.slice';
 
 export interface StoreState {
-  profile: CheckState;
+  profile: ProfileState;
   chat: ChatState;
+  home: HomeState;
 }
 
 export interface StoreAction {
@@ -28,20 +27,18 @@ const persStore = {
   storage,
 };
 
-const sagaMiddleware = createSagaMiddleware();
-
 const rootReducer = combineReducers({
   profile: profileSlice,
   chat: chatSlice,
+  home: homeSlice,
 });
 
 const persistReducers = persistReducer(persStore, rootReducer);
 export const store = configureStore({
   reducer: persistReducers,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk, logger, sagaMiddleware],
+  middleware: [thunk],
 });
-sagaMiddleware.run(chatSaga);
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
-import { Message } from '../../shared/message';
-import { User } from '../../shared/user';
+import { Message } from '../../components/shared/message';
+import { User } from '../../components/shared/user';
 
 export interface ChatState {
   users: User[];
@@ -12,7 +12,6 @@ export interface ChatActions {
   addUser: () => void;
   deleteUser: () => void;
 }
-
 export interface ChatPayload {
   payload: {
     user: User;
@@ -90,15 +89,6 @@ export const chatSlice: Slice<ChatState> = createSlice({
         id: nanoid(),
         messages: [],
       });
-    },
-    addBotMessage(state, action: BotPayload) {
-      if (!action.payload.bot || !action.payload.user.messages) {
-        return;
-      } else {
-        const us = state.users.find((el) => el.id === action.payload.user.id);
-        state.users[state.users.indexOf(us)].messages.push(action.payload.bot);
-        return;
-      }
     },
   },
   extraReducers: (builder) => {
