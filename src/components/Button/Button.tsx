@@ -3,6 +3,7 @@ import ButtonUI from '@mui/material/Button';
 type Props = {
   addField: () => void;
   disabled: boolean;
+  children: string;
 };
 
 export const Button = memo(function Button(props: Props) {
@@ -12,7 +13,7 @@ export const Button = memo(function Button(props: Props) {
       variant="contained"
       onClick={props.addField}
     >
-      enter
+      {props.children}
     </ButtonUI>
   );
 });
