@@ -25,7 +25,6 @@ export interface StoreAction {
 const persStore = {
   key: 'root',
   storage,
-  blacklist: ['chat'],
 };
 
 const rootReducer = combineReducers({

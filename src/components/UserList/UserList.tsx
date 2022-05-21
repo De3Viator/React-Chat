@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { User } from '../shared/user';
@@ -10,22 +10,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 type Props = {
   userList: User[];
   deleteUser: (user: User) => void;
-  moveUser: (userList) => void;
 };
 export function UserList(props: Props) {
-  const [chat, setChat] = useState([]);
-  useEffect(() => {
-    const chatTemp = [];
-    for (const key in props.userList) {
-      chatTemp.push({ ...props.userList[key], id: key });
-    }
-    setChat([...chatTemp]);
-    props.moveUser([...chatTemp]);
-  }, [props.userList]);
   return (
     <>
       <List>
-        {chat.map((user) => (
+        {props.userList.map((user) => (
           <Link className="user-link" key={user.id} to={`/chats/${user.id}`}>
             <ListItem disablePadding data-testid="message">
               <ListItemButton>
